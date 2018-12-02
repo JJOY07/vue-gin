@@ -19,7 +19,7 @@
                         More <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a href="#" @click="deleteTodo(index)">DELETE</a></li>
+                        <li><a href="#" @click="deleteTodo(todo)">DELETE</a></li> <!--index > todo ?-->
                     </ul>
                 </div>
             </li>
@@ -30,15 +30,40 @@
 <script>
     export default {
         methods:{
+            getTodos() {
+                var vm = this;
+                this.$http.get('http://127.0.0.1:8000/api/todos')
+                .then((result) => {
+                    console.log(result)
+                    vm.todos = result.data.data;
+                })
+            },
             deleteTodo(i) {
-                this.todos.splice(i,1);
+                var vm = this
+                this.todos.array.forEach(function(_todo, i, obj) {
+                    if(_todo.id === todo.id) {
+                        vm.$http.delete('http://127.0.0.1:8000/api/todos/'+todo.id)
+                        .then((result)=>{
+                            obj.splice(i,1)
+                        })
+                    }                    
+                });
             },
             createTodo(name) {
                 if(name != null) {
-                    this.todos.push({name:name});
+                    var vm = this;
+                    this.$http.defaults.headers.post['Content-Type']='application/json'
+                    this.$http.post('http://127.0.0.1:8000/api/todos', {
+                        name:name}).then((result) => {
+                            vm.todos.push(result.data)
+                        })
+                    //this.todos.push({name:name});
                     this.name = null
                 }
             }
+        },
+        mounted() {
+            this.getTodos();
         },
         name: 'TodoPage',
         data() {
