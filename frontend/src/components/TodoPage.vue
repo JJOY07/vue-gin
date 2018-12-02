@@ -12,7 +12,7 @@
             </span>
         </div>
         <ul class="list-group">
-            <li class="list-group-item" v-for="(todo, index) in todos" :key="todo">
+            <li class="list-group-item" v-for="todo in todos" :key="todo">
                 {{todo.name}}
                 <div class="btn-group pull-right" style="font-size: 12px; line-height: 1;">
                     <button type="button" class="btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
