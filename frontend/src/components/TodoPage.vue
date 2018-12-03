@@ -53,7 +53,7 @@
                 if(name != null) {
                     var vm = this;
                     this.$http.defaults.headers.post['Content-Type']='application/json'
-                    this.$http.post('http://127.0.0.1:8000/api/todos', {
+                    this.$http.post('http://127.0.0.1:8000/api/todos/', {
                         name:name}).then((result) => {
                             vm.todos.push(result.data)
                         })
